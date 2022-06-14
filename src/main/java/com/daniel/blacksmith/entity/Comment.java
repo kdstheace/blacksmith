@@ -1,6 +1,5 @@
 package com.daniel.blacksmith.entity;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,12 +16,9 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
 
-    @Column(name="comment_name")
-    private String commentName;
-    @Column(name="comment_email")
-    private String commentEmail;
-    @Column(name="comment_body")
-    private String commentBody;
+    private String name;
+    private String email;
+    private String body;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="post_id", nullable = false)
