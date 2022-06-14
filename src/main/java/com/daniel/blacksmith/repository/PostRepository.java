@@ -2,7 +2,9 @@ package com.daniel.blacksmith.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PostRepository extends JpaRepository {
+import com.daniel.blacksmith.entity.Post;
+
+public interface PostRepository extends JpaRepository<Post, Long> {
     /**
      1. typeVariable: entity type, primary key type
      2. no need to explicitly write a code, cuz "JPARespository" already provides primary CRUD functions.

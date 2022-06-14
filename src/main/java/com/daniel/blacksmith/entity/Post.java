@@ -18,13 +18,13 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
 
-    @Column(name="title")
+    @Column(name="title", nullable = false)
     private String title;
 
-    @Column(name="description")
+    @Column(name="description", nullable = false)
     private String description;
 
-    @Column(name="content")
+    @Column(name="content", nullable = false)
     private String content;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -39,6 +39,15 @@ public class Post {
       PRIMARY KEY (`id`),
       UNIQUE KEY `UKmchce1gm7f6otpphxd6ixsdps` (`title`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `posts` (
+  `post_id` bigint NOT NULL AUTO_INCREMENT,
+  `content` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  PRIMARY KEY (`post_id`),
+  UNIQUE KEY `UKmchce1gm7f6otpphxd6ixsdps` (`title`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
     * */
 
