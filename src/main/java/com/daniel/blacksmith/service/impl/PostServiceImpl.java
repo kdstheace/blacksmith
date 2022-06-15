@@ -1,14 +1,20 @@
 package com.daniel.blacksmith.service.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.daniel.blacksmith.entity.Post;
 import com.daniel.blacksmith.exception.ResourceNotFoundException;
 import com.daniel.blacksmith.payload.PostDto;
+import com.daniel.blacksmith.payload.PostResponse;
 import com.daniel.blacksmith.repository.PostRepository;
 import com.daniel.blacksmith.service.PostService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -31,8 +37,22 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getAllPosts() {
-        return null;
+    public PostResponse getAllPosts(int pageNo, int pageSize, String sortBy, String sortDir) {
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+        Page<Post> posts = postRepository.findAll(pageable);
+        List<Post> postList = posts.getContent();
+        List<PostDto> postDtoList = postList.stream().map(post -> mapToDto(post)).collect(Collectors.toList());
+
+        PostResponse postResponse = new PostResponse();
+        postResponse.setPostList(postDtoList);
+        postResponse.setPageNo(posts.getNumber());
+        postResponse.setPageSize(posts.getSize());
+        postResponse.setTotalElements(posts.getTotalElements()); //전체 개수
+        postResponse.setTotalPages(posts.getTotalPages()); //전체 페이지 수
+        postResponse.setLast(posts.isLast());
+
+        return postResponse;
     }
 
     @Override

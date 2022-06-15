@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import com.daniel.blacksmith.payload.PostDto;
 import com.daniel.blacksmith.payload.PostResponse;
 import com.daniel.blacksmith.service.PostService;
+import com.daniel.blacksmith.utils.AppConstants;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -23,8 +24,12 @@ public class PostController {
     }
 
     @GetMapping
-    public PostResponse getAllPosts(){
-
+    public PostResponse getAllPosts(
+        @RequestParam(name="pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo
+        , @RequestParam(name="pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize
+        , @RequestParam(name="sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy
+        , @RequestParam(name="sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIR, required = false) String sortDir){
+        return postService.getAllPosts(pageNo,pageSize,sortBy,sortDir);
     }
 
     @GetMapping("/{id}")
