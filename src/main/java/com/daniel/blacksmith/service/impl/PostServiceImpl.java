@@ -82,7 +82,7 @@ public class PostServiceImpl implements PostService {
     //concert Entity into DTO
     private PostDto mapToDto(Post post){
         PostDto postDto = new PostDto();
-        postDto.setPostId(post.getPostId());
+        postDto.setPostId(post.getId());
         postDto.setTitle(post.getTitle());
         postDto.setDescription(post.getDescription());
         postDto.setContent(post.getContent());
