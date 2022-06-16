@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import com.daniel.blacksmith.payload.CommentDto;
 import com.daniel.blacksmith.service.CommentService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,7 +21,7 @@ public class CommentController {
 
     @PostMapping("/posts/{postId}/comments")
     public ResponseEntity<CommentDto> createComment(@PathVariable(value="postId") Long postId
-                                ,@RequestBody CommentDto commentDto){
+                                ,@Valid @RequestBody CommentDto commentDto){
         return new ResponseEntity<>(commentService.createComment(postId, commentDto), HttpStatus.CREATED);
     }
 
@@ -39,7 +40,7 @@ public class CommentController {
     @PutMapping("/posts/{postId}/comments/{commentId}")
     public ResponseEntity<CommentDto> updateCommentById(@PathVariable(value="postId") Long postId,
                                                         @PathVariable(value="commentId") Long commentId,
-                                                        @RequestBody CommentDto commentDto){
+                                                        @Valid @RequestBody CommentDto commentDto){
         return ResponseEntity.ok(commentService.updateComment(postId, commentId, commentDto));
     }
 
