@@ -9,6 +9,8 @@ import com.daniel.blacksmith.payload.PostResponse;
 import com.daniel.blacksmith.service.PostService;
 import com.daniel.blacksmith.utils.AppConstants;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/posts")
 public class PostController {
@@ -19,7 +21,7 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto){
+    public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto){
         return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
     }
 
@@ -40,7 +42,7 @@ public class PostController {
 
     @PutMapping("/{id}")
     public ResponseEntity<PostDto> updatePost(@PathVariable(name="id") Long postId,
-                                              @RequestBody PostDto postDto){
+                                              @Valid @RequestBody PostDto postDto){
         return ResponseEntity.ok(postService.updatePost(postId, postDto));
     }
 
@@ -49,7 +51,4 @@ public class PostController {
         postService.deletePost(postId);
         return new ResponseEntity<>("Post entity delete successfully", HttpStatus.OK);
     }
-
-
-
 }
