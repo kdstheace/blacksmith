@@ -47,13 +47,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
-    // @ExceptionHandler(BadWordException.class)
-    // public ResponseEntity<ErrorDetails> handleBadWordException(BadWordException exception,
-    //                                                            WebRequest webRequest){
-    //     ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(),
-    //         webRequest.getDescription(false)); //description method : true = whole description, false: only url
-    //     return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
-    // }
+    @ExceptionHandler(BadWordException.class)
+    public ResponseEntity<ErrorDetails> handleBadWordException(BadWordException exception,
+                                                               WebRequest webRequest){
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(),
+            webRequest.getDescription(false)); //description method : true = whole description, false: only url
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
