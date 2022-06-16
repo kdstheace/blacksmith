@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.daniel.blacksmith.entity.Post;
+import com.daniel.blacksmith.exception.BadWordException;
 import com.daniel.blacksmith.exception.ResourceNotFoundException;
 import com.daniel.blacksmith.payload.PostDto;
 import com.daniel.blacksmith.payload.PostResponse;
@@ -15,6 +16,7 @@ import com.daniel.blacksmith.repository.PostRepository;
 import com.daniel.blacksmith.service.PostService;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +32,11 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto createPost(PostDto postDto) {
+        //validation Check
+        if(postDto.getTitle().toLowerCase(Locale.ROOT).contains("fuck".toLowerCase(Locale.ROOT))){
+            throw new BadWordException("fuck", "F word is not available for Post title");
+        }
+
         //convert DTO into entity
         Post post = mapToEntity(postDto);
         Post newPost = postRepository.save(post);

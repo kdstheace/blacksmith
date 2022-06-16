@@ -17,15 +17,21 @@ public class ErrorDetails {
         return timestamp;
     }
 
-
-
     public String getMessage() {
         return message;
     }
-
 
     public String getDetails() {
         return details;
     }
 
+    // default format provided by Springboot
+    // {
+    //     "timestamp" : "2021-02-28T14:15:18.250+00:00",
+    //     "status" : 404,
+    //     "error" : "Not Found",
+    //     "trace" : "com.springboot.blog.exception.ResourceNotFoundException: Post not found with id asdfdsa...",
+    //     "message" : "Post not found with id asdfdsa...",
+    //     "path" : "/api/posts/6"
+    // }
 }
