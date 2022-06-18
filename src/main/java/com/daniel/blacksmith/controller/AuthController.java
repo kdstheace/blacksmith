@@ -1,6 +1,6 @@
 package com.daniel.blacksmith.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.daniel.blacksmith.entity.Role;
+import com.daniel.blacksmith.entity.User;
 import com.daniel.blacksmith.payload.LoginDto;
 import com.daniel.blacksmith.payload.SignUpDto;
 import com.daniel.blacksmith.repository.RoleRepository;
 import com.daniel.blacksmith.repository.UserRepository;
+
+import java.util.Collections;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -26,15 +30,18 @@ public class AuthController {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
+    private ModelMapper modelMapper;
 
     public AuthController(AuthenticationManager authenticationManager,
                           UserRepository userRepository,
                           RoleRepository roleRepository,
-                          PasswordEncoder passwordEncoder){
+                          PasswordEncoder passwordEncoder,
+                          ModelMapper modelMapper){
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.modelMapper = modelMapper;
     }
 
     @PostMapping("/signin")
@@ -60,7 +67,17 @@ public class AuthController {
             return new ResponseEntity<>("Email is already exist!", HttpStatus.BAD_REQUEST);
         }
         //Create user object
-        return null;
+        User user = new User();
+        user.setName(signUpDto.getName());
+        user.setEmail(signUpDto.getEmail());
+        user.setUsername(signUpDto.getUsername());
+        user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
+
+        Role roles = roleRepository.findByName("USER").get();
+        user.setRoles(Collections.singleton(roles)); //원소가 1개밖에 없는데 set에 넣어야 하는 경우 사용한다.
+
+        userRepository.save(user);
+        return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
     }
 
 }
