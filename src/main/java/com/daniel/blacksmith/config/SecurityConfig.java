@@ -24,9 +24,9 @@ import com.daniel.blacksmith.security.JwtAuthenticationEntryPoint;
 import com.daniel.blacksmith.security.JwtAuthenticationFilter;
 import com.daniel.blacksmith.security.JwtTokenProvider;
 
-@Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true) //HTTP 메소드를 지정해서 권한제어(~Matchers)하기 위함
+@Configuration //빈등록
+@EnableWebSecurity //SpringSecurity활성화
+@EnableGlobalMethodSecurity(prePostEnabled = true) //Controller에서 특정페이지에 특정권한이 있는 유저만 접근허용할 경우, @PreAuthorize어노테이션 사용. 이를 활성화시키는 것HTTP 메소드를 지정해서 권한제어(~Matchers)하기 위함
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private CustomerUserDetailsService customerUserDetailsService;
@@ -53,6 +53,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
+    //WebSecurity: FilterChainProxy를 생성하는 필터, 다양한 filter설정가능. - web.ignoring().antMatchers("/css/**", "/js/**", "/lib/**);
+    //HttpSecurity: HTTP요청에 대한 보안 설정
+    //
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //basic authentication: 페이지가 아니라, 팝업으로 뜬다
