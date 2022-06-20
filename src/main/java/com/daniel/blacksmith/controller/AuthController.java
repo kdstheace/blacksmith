@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.daniel.blacksmith.entity.Role;
 import com.daniel.blacksmith.entity.User;
+import com.daniel.blacksmith.payload.JWTAuthResponse;
 import com.daniel.blacksmith.payload.LoginDto;
 import com.daniel.blacksmith.payload.SignUpDto;
 import com.daniel.blacksmith.repository.RoleRepository;
 import com.daniel.blacksmith.repository.UserRepository;
+import com.daniel.blacksmith.security.JwtTokenProvider;
 
 import java.util.Collections;
 
@@ -30,30 +32,35 @@ public class AuthController {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
-    private ModelMapper modelMapper;
+    private JwtTokenProvider jwtTokenProvider;
 
     public AuthController(AuthenticationManager authenticationManager,
                           UserRepository userRepository,
                           RoleRepository roleRepository,
                           PasswordEncoder passwordEncoder,
-                          ModelMapper modelMapper){
+                          JwtTokenProvider jwtTokenProvider
+    ){
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
-        this.modelMapper = modelMapper;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<String> authenticateUser(@RequestBody LoginDto loginDto){
+    public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody LoginDto loginDto){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
             loginDto.getUsernameOrEmail(),
             loginDto.getPassword())
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return new ResponseEntity<>("User signed-in successfully!", HttpStatus.OK);
 
+        //get token from JwtTokenProvider class
+        String token = jwtTokenProvider.generateToken(authentication);
+
+        return ResponseEntity.ok(new JWTAuthResponse(token));
+        // return new ResponseEntity<>("User signed-in successfully!", HttpStatus.OK);
     }
 
     @PostMapping("/signup")
@@ -73,7 +80,7 @@ public class AuthController {
         user.setUsername(signUpDto.getUsername());
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
 
-        Role roles = roleRepository.findByName("USER").get();
+        Role roles = roleRepository.findByName("ADMIN").get();
         user.setRoles(Collections.singleton(roles)); //원소가 1개밖에 없는데 set에 넣어야 하는 경우 사용한다.
 
         userRepository.save(user);

@@ -10,14 +10,19 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.daniel.blacksmith.security.CustomerUserDetailsService;
+import com.daniel.blacksmith.security.JwtAuthenticationEntryPoint;
+import com.daniel.blacksmith.security.JwtAuthenticationFilter;
+import com.daniel.blacksmith.security.JwtTokenProvider;
 
 @Configuration
 @EnableWebSecurity
@@ -25,9 +30,17 @@ import com.daniel.blacksmith.security.CustomerUserDetailsService;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private CustomerUserDetailsService customerUserDetailsService;
+    private JwtAuthenticationEntryPoint authenticationEntryPoint;
 
-    public SecurityConfig(CustomerUserDetailsService customerUserDetailsService){
+    public SecurityConfig(CustomerUserDetailsService customerUserDetailsService,
+                          JwtAuthenticationEntryPoint authenticationEntryPoint){
         this.customerUserDetailsService = customerUserDetailsService;
+        this.authenticationEntryPoint = authenticationEntryPoint;
+    }
+
+    @Bean
+    public JwtAuthenticationFilter  jwtAuthenticationFilter(){
+        return new JwtAuthenticationFilter();
     }
 
     @Bean
@@ -46,13 +59,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //postman에선 basic auth로 접근
         http
             .csrf().disable()
+            .exceptionHandling()
+            .authenticationEntryPoint(authenticationEntryPoint)
+            .and()
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
             .authorizeRequests()
             .antMatchers(HttpMethod.GET, "/api/**").permitAll() // allUser에게 허용
             .antMatchers("/api/auth/**").permitAll()
             .anyRequest()
-            .authenticated()
-            .and()
-            .httpBasic();
+            .authenticated();
+            //basic authentication
+            // .and()
+            // .httpBasic();
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
