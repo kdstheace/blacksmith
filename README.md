@@ -4,14 +4,14 @@
 <h2>Author</h2>
 Dongsoo Kim (William)
 
-###Architecture
-####1.Framework
+### Architecture
+#### 1.Framework
 SpringBoot
-####2.Database
+#### 2.Database
 MySQL
-####3.Design
+#### 3.Design
 RESTfulAPI
-####4.Security
+#### 4.Security
 SpringSecurity, JWT
-####5.Deployment
+#### 5.Deployment
 AWS
