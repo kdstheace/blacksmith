@@ -56,28 +56,35 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     //WebSecurity: FilterChainProxy를 생성하는 필터, 다양한 filter설정가능. - web.ignoring().antMatchers("/css/**", "/js/**", "/lib/**);
     //HttpSecurity: HTTP요청에 대한 보안 설정
-    //
+    //전자는 정적리소스에 대한 보안예외처리를 주로 하고, 후자는 보안처리를 담당한다. 둘다 설정하면 WebSecurity가 HttpSecurity보다 우선적으로 고려됨
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //basic authentication: 페이지가 아니라, 팝업으로 뜬다
         //postman에선 basic auth로 접근
+        //authorizeRequests() - HttpServletRequest요청URL에 따라 접근권한 설정
+        //antMatchers("/paths") - 엔드포인트 경로를 지정한다
+        //authenticated() - 인증된 유저만 접근허용
+        //permitAll() - 모든 유저에게 접근 허용
+        //anonymous() - 인증되지 않는 유저만 허용
+        //denyAll() - 모든 유저 접근 불가
         http
-            .csrf().disable()
-            .exceptionHandling()
+            .csrf().disable() //1
+            .exceptionHandling() //2
             .authenticationEntryPoint(authenticationEntryPoint)
             .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .sessionManagement() //3
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS) //4
             .and()
-            .authorizeRequests()
+            .authorizeRequests() //5
             .antMatchers(HttpMethod.GET, "/api/**").permitAll() // allUser에게 허용
             .antMatchers("/api/auth/**").permitAll()
+            .antMatchers("/api/admin/**").hasRole("ADMIN") //ADMIN에게만 제한
             .anyRequest()
             .authenticated();
             //basic authentication
             // .and()
             // .httpBasic();
-        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class); //6
     }
 
     @Override
