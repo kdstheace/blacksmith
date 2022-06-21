@@ -25,7 +25,7 @@ import com.daniel.blacksmith.security.JwtTokenProvider;
 import java.util.Collections;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api")
 public class AuthController {
 
     private AuthenticationManager authenticationManager;
@@ -47,7 +47,7 @@ public class AuthController {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    @PostMapping("/signin")
+    @PostMapping("/v1/auth/signin")
     public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody LoginDto loginDto){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
             loginDto.getUsernameOrEmail(),
@@ -63,7 +63,7 @@ public class AuthController {
         // return new ResponseEntity<>("User signed-in successfully!", HttpStatus.OK);
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/v1/auth/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto){
         //Check for username exists in a DB
         if(userRepository.existsByUsername(signUpDto.getUsername())){

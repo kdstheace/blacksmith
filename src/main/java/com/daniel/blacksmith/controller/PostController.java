@@ -13,7 +13,7 @@ import com.daniel.blacksmith.utils.AppConstants;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/posts")
+@RequestMapping("/api")
 public class PostController {
     private PostService postService;
 
@@ -27,7 +27,7 @@ public class PostController {
         return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping("/v1/posts")
     public PostResponse getAllPosts(
         @RequestParam(name="pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo
         , @RequestParam(name="pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize
@@ -36,21 +36,21 @@ public class PostController {
         return postService.getAllPosts(pageNo,pageSize,sortBy,sortDir);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/v1/posts/{id}")
     public ResponseEntity<PostDto> getPostById(@PathVariable(name = "id") Long postId){
         return ResponseEntity.ok(postService.getPostById(postId));
         // return new ResponseEntity<>(postService.getPostById(postId), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/{id}")
+    @PutMapping("/v1/posts/{id}")
     public ResponseEntity<PostDto> updatePost(@PathVariable(name="id") Long postId,
                                               @Valid @RequestBody PostDto postDto){
         return ResponseEntity.ok(postService.updatePost(postId, postDto));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/v1/posts/{id}")
     public ResponseEntity<String> deletePost(@PathVariable(name="id") Long postId){
         postService.deletePost(postId);
         return new ResponseEntity<>("Post entity delete successfully", HttpStatus.OK);
