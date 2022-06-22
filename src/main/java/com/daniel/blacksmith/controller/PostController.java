@@ -20,9 +20,9 @@ public class PostController {
     public PostController(PostService postService){
         this.postService = postService;
     }
-
-    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')") //ROLE_ADMIN    -- difference btw hasRole('a'), hasAuthority('a') the former adds 'ROLE_' as a prefix
+    @PostMapping("/v1/posts")
     public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto){
         return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
     }
@@ -42,14 +42,14 @@ public class PostController {
         // return new ResponseEntity<>(postService.getPostById(postId), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/v1/posts/{id}")
     public ResponseEntity<PostDto> updatePost(@PathVariable(name="id") Long postId,
                                               @Valid @RequestBody PostDto postDto){
         return ResponseEntity.ok(postService.updatePost(postId, postDto));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/v1/posts/{id}")
     public ResponseEntity<String> deletePost(@PathVariable(name="id") Long postId){
         postService.deletePost(postId);

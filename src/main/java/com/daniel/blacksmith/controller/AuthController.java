@@ -49,10 +49,10 @@ public class AuthController {
 
     @PostMapping("/v1/auth/signin")
     public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody LoginDto loginDto){
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+        UsernamePasswordAuthenticationToken upatoken = new UsernamePasswordAuthenticationToken(
             loginDto.getUsernameOrEmail(),
-            loginDto.getPassword())
-        );
+            loginDto.getPassword());
+        Authentication authentication = authenticationManager.authenticate(upatoken);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
