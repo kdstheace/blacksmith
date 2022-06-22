@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 import com.daniel.blacksmith.entity.Role;
 import com.daniel.blacksmith.entity.User;
 import com.daniel.blacksmith.payload.JWTAuthResponse;
@@ -24,6 +27,7 @@ import com.daniel.blacksmith.security.JwtTokenProvider;
 
 import java.util.Collections;
 
+@Api(value="Auth controller exposes signin and signup RESTAPI")
 @RestController
 @RequestMapping("/api")
 public class AuthController {
@@ -47,6 +51,7 @@ public class AuthController {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
+    @ApiOperation(value = "REST API to signIn user")
     @PostMapping("/v1/auth/signin")
     public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody LoginDto loginDto){
         UsernamePasswordAuthenticationToken upatoken = new UsernamePasswordAuthenticationToken(
@@ -63,6 +68,7 @@ public class AuthController {
         // return new ResponseEntity<>("User signed-in successfully!", HttpStatus.OK);
     }
 
+    @ApiOperation(value = "REST API to register user")
     @PostMapping("/v1/auth/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto){
         //Check for username exists in a DB
