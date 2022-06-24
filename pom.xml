@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <groupId>com.daniel.blacksmith</groupId>
-  <artifactId>daniel_blacksmith</artifactId>
-  <version>1.0-SNAPSHOT</version>
 
   <parent>
     <artifactId>spring-boot-starter-parent</artifactId>
@@ -14,9 +9,14 @@
     <version>2.4.2</version>
   </parent>
 
+  <groupId>com.daniel.blacksmith</groupId>
+  <artifactId>daniel_blacksmith</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>daniel_blacksmith</name>
+  <description>Spring boot blog application rest api&apos;s</description>
+
   <properties>
-    <maven.compiler.source>8</maven.compiler.source>
-    <maven.compiler.target>8</maven.compiler.target>
+    <java.version>1.8</java.version>
   </properties>
 
   <dependencies>
@@ -78,8 +78,23 @@
       <artifactId>springfox-boot-starter</artifactId>
       <version>3.0.0</version>
     </dependency>
-
-
-
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+            </exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
 </project>
