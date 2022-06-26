@@ -37,6 +37,44 @@ updated in 2022.06.27
    1. Nothing but any POJO(Plain old java object) class that is managed by Spring IoC Controller
    2. Beans are created with the configuration metadata in the form of XML configs and Annotations.
    3. SpringIoCContainer manages the lifecycle of SpringBeanScope, and injecting any required dependencies in the Bean.
+   4. How to Create Spring Beans?
+       1. with simply using "new A()" SpringContext/SpringIoCContainer will not have any clue of the object
+       2. but, **@Bean** lets Spring know that Spring needs to call the annotated method when it initializes its context
+          and adds the returned object/value to the SpringContext/SpringIoCContainer
+       3. method name will be the Bean name inside the springContext, so it is highly recommended to be a **Noun**.
+<details><summary>code Example</summary>
+
+```java
+      @Bean
+      Vehicle vehicle(){
+           var veh = new Vehicle();
+           veh.setName("Soo's SuperCar");
+           return veh;
+      }
+      @Bean
+      String hello(){
+           return "hello";
+      }
+      @Bean
+      int a(){
+          return 12;
+      }
+      var context = new AnnotationConfigApplicationContext(ProjectConfig.class); //act as a IoCContainer
+
+      Vehicle vehicle1 = context.getBean(Vehicle.class);
+      String hello = context.getBean(String.class);
+      Integer num = context.getBean(Integer.class);
+      System.out.println(String.format("the result would be vehicle1.getName()[%s], hello[%s], num[%d]", vehicle1.getName(), hello, num));
+       //the result would be vehicle1.getName()[sexyVEH], hello[hello], num[12]   
+```
+</details>
+
+   5. Annotations
+       1. @Configuration: let framework knows that the class has Bean definitions and processes this class while starting the application.
+       2. @Bean: Whatever object returned by method annotated with this, will become a bean and maintained by the SpringIoCContainer
+   6. NonUniqueBeanDefinitionException
+      1. 
+
 ### Context
    1. like a memory location of app where we add all the object instances that we want the framework to manage.
    2. To enable Spring to see your objects(beans), you need to add them to the CONTEXT
@@ -44,10 +82,10 @@ updated in 2022.06.27
    1. provides a powerful expression language for querying and manipulating an object at runtime
    2. (like getting/setting property values, property assignment, method invocation.)
 ### SpringIoCContainer
-   1. All lifecycle of SpringBeans is maintained by this. (creating Beans, Configuring object, assemble the dependencies btw objects)
+   1. All lifecycle of SpringBeans is maintained by this. (instantiate the application class, Configuring object, assemble the dependencies btw objects)
    2. 2Types
       1. org.springframework.beans.factory.BeanFactory(I/F) - basic(creating, autowire, configure beans)
-      2. org.springframework.beans.ApplicationContext(I/F)
+      2. org.springframework.beans.ApplicationContext(I/F) - more advanced IoCContainer than BeanFactory
 
 # Maven
 1. helps projects to build, download dependencies
