@@ -14,4 +14,4 @@ RESTfulAPI
 #### 4.Security
 SpringSecurity, JWT
 #### 5.Deployment
-AWS Beanstalk
+AWS Beanstalk - 06.26
