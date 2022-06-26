@@ -46,11 +46,17 @@ updated in 2022.06.27
 
 ```java
       @Bean
-      Vehicle vehicle(){
+      Vehicle vehicle1(){
            var veh = new Vehicle();
            veh.setName("Soo's SuperCar");
            return veh;
       }
+      @Bean
+      Vehicle vehicle2(){
+            var veh = new Vehicle();
+            veh.setName("New CAR2");
+            return veh;
+          }
       @Bean
       String hello(){
            return "hello";
@@ -61,7 +67,7 @@ updated in 2022.06.27
       }
       var context = new AnnotationConfigApplicationContext(ProjectConfig.class); //act as a IoCContainer
 
-      Vehicle vehicle1 = context.getBean(Vehicle.class);
+      Vehicle vehicle1 = context.getBean("vehicle1", Vehicle.class);
       String hello = context.getBean(String.class);
       Integer num = context.getBean(Integer.class);
       System.out.println(String.format("the result would be vehicle1.getName()[%s], hello[%s], num[%d]", vehicle1.getName(), hello, num));
@@ -72,8 +78,11 @@ updated in 2022.06.27
    5. Annotations
        1. @Configuration: let framework knows that the class has Bean definitions and processes this class while starting the application.
        2. @Bean: Whatever object returned by method annotated with this, will become a bean and maintained by the SpringIoCContainer
+          By default, the bean name is an annotated method name. so method name is recommended to be Noun.
+          However, you can put name in the value parameter of @Bean (eg. @Bean("name"), @Bean(name="name"), @Bean(value="name"))
    6. NonUniqueBeanDefinitionException
-      1. 
+      1. While we create multiple objects of same data type and try to fetch the bean from context by type, then Spring cannot specify which instance is referred.
+      2. 
 
 ### Context
    1. like a memory location of app where we add all the object instances that we want the framework to manage.
