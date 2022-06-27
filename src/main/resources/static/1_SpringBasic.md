@@ -82,8 +82,10 @@ updated in 2022.06.27
           However, you can put name in the value parameter of @Bean (eg. @Bean("name"), @Bean(name="name"), @Bean(value="name"))
    6. NonUniqueBeanDefinitionException
       1. While we create multiple objects of same data type and try to fetch the bean from context by type, then Spring cannot specify which instance is referred.
-      2. 
-
+   7. @Primary
+      1. When you have multiple beans of the same kind inside the Spring context, you can make one of them primary by using @Primary. 
+      2. Primary bean is the default bean that Spring Context will consider in case of confusion due to multiple beans present of same type.
+      3. multiple primary bean will return "NoUniqueBeanDefinitionException"
 ### Context
    1. like a memory location of app where we add all the object instances that we want the framework to manage.
    2. To enable Spring to see your objects(beans), you need to add them to the CONTEXT
