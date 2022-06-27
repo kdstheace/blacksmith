@@ -25,7 +25,7 @@ updated in 2022.06.27
 # Spring Core
 ### Description
 1. the heart of entire Spring. It contains some base framework classes, principles and mechanisms.
-2. The entire Srping Framework are developed on top of the Spring Core
+2. The entire Spring Framework are developed on top of the Spring Core
 3. It contains following components
    1. IoC(Inversion of Control)
    2. Dependency Injection
