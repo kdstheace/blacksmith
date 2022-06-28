@@ -75,7 +75,7 @@ updated in 2022.06.27
 ```
 </details>
 
-   5. Annotations
+   5. @Configuration, @Bean
        1. @Configuration: let framework knows that the class has Bean definitions and processes this class while starting the application.
        2. @Bean: Whatever object returned by method annotated with this, will become a bean and maintained by the SpringIoCContainer
           By default, the bean name is an annotated method name. so method name is recommended to be Noun.
@@ -86,6 +86,17 @@ updated in 2022.06.27
       1. When you have multiple beans of the same kind inside the Spring context, you can make one of them primary by using @Primary. 
       2. Primary bean is the default bean that Spring Context will consider in case of confusion due to multiple beans present of same type.
       3. multiple primary bean will return "NoUniqueBeanDefinitionException"
+   8. @Component, @ComponentScan(basePackages = "com.example.abc") 
+      1. @Component: stereotype annotation, put on top of the POJO java class to add it to the Spring context.
+      2. @ComponentScan: it instructs Spring on where to find the classes you marked with stereotype annotations.
+      * 차이점. @Bean으로 생성하면 Context에 빈생성할 때 뭔가 조작을 할 수 있지만 ComponentScan은 생성자 등으로 세팅하지 않는 이상 기본값(객체는 null 등)으로 초기화된다.
+   9. Stereotype Annotations
+      1. help to create the Spring beans automatically in the application context.
+      2. @Component: is used as general on top of any Java class. base for other annotations
+      3. @Service: service layer where we write business logic and make external API calls
+      4. @Repository: handles the code related to DB access operations like Insert, Delete, Update
+      5. @Controller: controller layer of MVC applications.
+         * 
 ### Context
    1. like a memory location of app where we add all the object instances that we want the framework to manage.
    2. To enable Spring to see your objects(beans), you need to add them to the CONTEXT
