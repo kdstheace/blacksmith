@@ -22,7 +22,7 @@ import com.daniel.blacksmith.security.JwtAuthenticationEntryPoint;
 import com.daniel.blacksmith.security.JwtAuthenticationFilter;
 import com.daniel.blacksmith.security.JwtTokenProvider;
 
-@Configuration //빈등록
+@Configuration //빈등록 @SpringBootApplication에서 이미 전 프로젝트에 대해 @EnableSpringConfiguration을 해주고 있기 떄문에 생략가능
 @EnableWebSecurity //SpringSecurity활성화
 @EnableGlobalMethodSecurity(prePostEnabled = true) //Controller에서 특정페이지에 특정권한이 있는 유저만 접근허용할 경우, @PreAuthorize어노테이션 사용. 이를 활성화시키는 것HTTP 메소드를 지정해서 권한제어(~Matchers)하기 위함
 public class SecurityConfig{

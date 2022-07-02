@@ -1,4 +1,4 @@
-#How Srping Web application works?
+#How Spring Web application works?
 ###1. Overview
 1. The Web clients sends a request using protocols like HTTP to Web Application and the Web server where the web app is deployed receives the requests and process the response.
 2. In Java web apps, *Servlet Container(Web Server)* takes care of translating the HTTP messages for Java code to understand. 
@@ -28,5 +28,47 @@
    1. Before: Developer need to configure a servlet container, establish link btw Tomcat and Dispatcher servlet, deploy into a server, define all dependencies.
    2. automatically configure components
    3. SpringBoot app embed a webserver so that we do not require an external application server.
-   
-3. fdas
+
+###4. SpringBootFeatures
+1. SpringBootStarters
+   - relates dependencies used for a specific purpose as starter projects. (provides Embedded Tomcat as well)
+   - example: spring-boot-starter-web
+
+2. AutoConfiguration
+   - set configuration for certain dependencies by default. 
+   - SpringBoot follows the convention-over-configuration principles. (developer can override and customize it)
+   - ex) if we add MySql dependencies > create connection object to DB(username, password, port 3306 etc)
+   - How to Override default configuration? > application.properties
+     - server.port=8081  (0 -> random port number which is not duplicated)
+     - server.servlet.context-path=/sexySchool
+     - debug=true
+     - spring.thymeleaf.cache=false  (make thymeleaf do not cache the template, so developer do not have to restart server but only build it to see the updated template)
+3. Actuator&DevTools
+   - Actuator : Spring boot provides a pre-defined list of actuator endpoints. with this, we can monitor app health, metrics etc
+   - DevTools : automatic detection of code changes, liveReload server to automatically refresh any HTML changes to browser without server restart
+     - by maintaining 2 ClassLoaders, it can provide automatic restart, and liveReload.
+     - automatic restart: only with build after certain changes on code, devtool also restart server automatically
+     - live Reload: automatically reload the page
+     - However, it will disable all the caching. so it is not appropriate for prod env.
+     - Luckily devtool is smart enough not to be packaged in jar or war
+### Inside Spring Boot Application
+1. @SpringBootApplication
+   1. @EnableAutoConfiguration : enable Spring Boot's auto-configuration mechanism
+   2. @ComponentScan : enable @Component scan on the package where the application is located
+   3. @SpringBootConfiguration : enable registration of extra beans in the context or the import of additional configuration classes. An alternative to Spring's standard @Configuration annotation.
+
+# 2. FrontEnd
+### ViewControllerRegistry
+In order to direct mapping between the URL and the view name, we can use the ViewControllerRegistry. With this, there is
+no need for any Controller btw the two.
+```java
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/courses").setViewName("courses");
+        registry.addViewController("/abouts").setViewName("abouts");
+    }
+}
+```
+
