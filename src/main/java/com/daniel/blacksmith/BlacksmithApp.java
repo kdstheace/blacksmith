@@ -22,13 +22,13 @@ public class BlacksmithApp implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Role adminRole = new Role();
-        adminRole.setName("ADMIN");
-        roleRepository.save(adminRole);
-
-        Role userRole = new Role();
-        userRole.setName("USER");
-        roleRepository.save(userRole);
+        // Role adminRole = new Role();
+        // adminRole.setName("ADMIN");
+        // roleRepository.save(adminRole);
+        //
+        // Role userRole = new Role();
+        // userRole.setName("USER");
+        // roleRepository.save(userRole);
     }
 
     public static void main(String ... args){
