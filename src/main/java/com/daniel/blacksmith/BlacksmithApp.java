@@ -22,6 +22,7 @@ public class BlacksmithApp implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        System.out.println("sdfsdf");
         // Role adminRole = new Role();
         // adminRole.setName("ADMIN");
         // roleRepository.save(adminRole);
