@@ -54,7 +54,7 @@
 ### Inside Spring Boot Application
 1. @SpringBootApplication
    1. @EnableAutoConfiguration : enable Spring Boot's auto-configuration mechanism
-   2. @ComponentScan : enable @Component scan on the package where the application is located
+   2. @ComponentScan : enable @ComponentScan on the package where the application is located
    3. @SpringBootConfiguration : enable registration of extra beans in the context or the import of additional configuration classes. An alternative to Spring's standard @Configuration annotation.
 
 # 2. FrontEnd

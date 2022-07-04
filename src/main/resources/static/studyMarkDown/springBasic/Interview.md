@@ -90,9 +90,10 @@ Ex) Using Jetty instead of embedded Tomcat
 1. Using 'java -jar' command
 2. Using SpringBoot Maven plugin '-mvn spring-boot:run'
 
-# Q13. What Is Spring Boot DevTools Used For?
+# Q12. How to Add Security to Spring Boot and Explain Security Auto Configuration?
+1. Add Dependency
+2. Logging.level.org.springframework.security=DEBUG 
+3. ...
 
-# Q14. How to Add Security to Spring Boot and Explain Security Auto Configuration?
-
-# Q15. Have you used profiles in your Spring Boot project? If yes, Explain briefly?
-# Q15. Have you used profiles in your Spring Boot project? If yes, Explain briefly?
+# Q15. Explain profiles in your Spring Boot project
+1. spring.profiles.active = dev;
