@@ -91,3 +91,10 @@ but anonymous function cannot
    
    console.log(age1, age2);
 ```
+# ArrowFunction
+1. one line function
+```javascript
+const calcAge = birthYear => 2037 - birthYear;
+const age = calcAge("1991");
+console.log(age);
+```
