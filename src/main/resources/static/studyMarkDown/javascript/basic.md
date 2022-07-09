@@ -97,4 +97,34 @@ but anonymous function cannot
 const calcAge = birthYear => 2037 - birthYear;
 const age = calcAge("1991");
 console.log(age);
+
+const yearsUntilRetirement = birthYear => {
+   const age = 2023- birthYear;
+   const retirement = 65 - age;
+   return retirement;
+}
+console.log(yearsUntilRetirement(1991));
+
+const yearsUntilRetirement = (birthYear, givenRetireAge) => {
+   const age = 2023- birthYear;
+   const retirement = givenRetireAge - age;
+   return retirement;
+}
+console.log(yearsUntilRetirement(1991, 65));
+
+const cutFrutiPieces = fruit => fruit*4;
+const fruitProcessor = (apples, oranges) => {
+   console.log(`Juice with ${cutFrutiPieces(apples)} apples, ${cutFrutiPieces(oranges)} oranges`);
+}
+```
+
+
+# Array
+```javascript
+const friends = ['ho', 'MK', 'DC'];
+console.log(friends[2]);
+
+const years = new Array(1991, 1987, 2555, 2151);
+console.log(years);
+console.log(friends.length);
 ```
