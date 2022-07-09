@@ -128,3 +128,76 @@ const years = new Array(1991, 1987, 2555, 2151);
 console.log(years);
 console.log(friends.length);
 ```
+1. operations 
+   - add: push, unshift
+   - remove: pop, shift
+   - search: indexOf, includes
+```javascript
+const friends = ['Michael', 'John', 'Peter'];
+
+//add elements
+const newLength = friends.push('Jay');
+console.log(friends[newLength-1]);
+
+const newLength2 = friends.unshift('John'); //add elements at the beginning of the array
+console.log(friends);
+
+
+//remove elements
+const lastOne = friends.pop() // last;
+console.log(friends);
+
+friends.shift();
+console.log(friends); //first
+
+//Search
+console.log(friends.indexOf('Peter'));
+console.log(friends.indexOf('df')); //-1
+
+friends.push(23);
+console.log(friends.includes('Peter')); //true
+console.log(friends.includes('Bob')); //false
+console.log(friends.includes('23')); //false
+console.log(friends.includes(23)); //true
+```
+```javascript
+const calcTip = bill => (50 <= bill && bill <= 300) ? bill*0.15 : bill*0.20;
+const testBills = new Array(125, 555, 44);
+const calcTips = bills => {
+   const tips = new Array();
+   for(let i = 0; i < bills.length; i++){
+      tips.push(calcTip(bills[i]));
+   }
+   return tips;
+}
+console.log(calcTips(testBills));
+```
+# Object
+```javascript
+const dongsoo = {
+    firstName : "Dongsoo",
+    lastName : "Kim",
+    age: 2023-1991,
+    job: 'teacher',
+    friends: ['Micheal', 'Peter', 'Steven']
+};
+
+console.log(dongsoo);
+console.log(dongsoo.lastName);
+console.log(dongsoo["firstName"]);
+// dongsoo.lastName vs dongsoo["firstName"]
+const nameKey = 'Name';
+console.log(dongsoo['first' + nameKey]);
+console.log(dongsoo['last' + nameKey]);
+
+const interest = prompt('What do you want to know about Dongsoo? Choose btw firstName, lastName, age, job, and friends');
+console.log(dongsoo.interest); //undefined
+console.log(dongsoo[interest] === undefined ? 'what?' : dongsoo[interest]);
+```
+
+```javascript
+dongsoo.location = 'Portugal';
+dongsoo['twitter'] = '@sexysoo';
+console.log(dongsoo);
+```
+
