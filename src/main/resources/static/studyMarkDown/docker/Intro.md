@@ -44,6 +44,30 @@
    1. docker(클라이언트) run(컨테이너 생성, 실행) image-name(이미지) ls(원래 가진 시작명령어를 무시하고 이 자리의 커맨드를 실행함)
    2. 
 
-
+# 도커 라이프 사이클
+   0. 도커 생명주기
+      1. 생성, 시작, 실행, 중지, 삭제
+      2. 생성 : docker create 이미지이름
+      3. 시작 : docker start 시작컨테이너이름
+         docker start -a 시작컨이름 : attach가 붙으면 아웃풋도 표시된다.
+      4. 생성시작: docker run 이미지이름
+      5. 중지 : docker stop 중지컨테이너이름/아이디
+      6. 삭제 : docker rm 삭제할컨테이너이름/아이디
+   실행 > 중지 > 삭제
+   1. 중지
+      1. docker stop: gracefully stop, 그동안 하던 작업들을 완료하고 컨테이너 중지
+         1. docker stop > SIGTERM > (GracePeriod) > SIGKILL > Container(MainProcess)
+      2. docker kill: instantly stop, 아무것도 안기다리고 바로 컨테이너 중지
+         1. docker stop >                           SIGKILL > Container(MainProcess)
+   2. 삭제
+      1. 컨테이너 삭제
+         1. docker rm <아이디/이름>
+         2. docker rm `docker ps -a -q`  -전체삭제
+            * 윈도우 : FOR /F %i in ('docker ps -a -q') do docker rm %i
+      2. 이미지 삭제
+         1. docker rmi <이미지id>
+         2. docker system prune : 한번에 컨테이너, 이미지, 네트워크 모두 삭제 * 이것도 실행중인 컨테이너에는 영향 X
+         3. 
+   
 # 명령어
 1. 이미지 실행 : docker run hello-world
