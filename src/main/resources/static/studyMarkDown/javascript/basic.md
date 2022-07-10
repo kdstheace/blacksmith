@@ -19,6 +19,7 @@
 
 # Operator
 1. typeof 
+   1. only String ; if(typeof a !== 'string')  -> lower case!!
 2. **
 x = y = 10-2  > console(x, y);  // 8, 8
 
@@ -172,16 +173,34 @@ const calcTips = bills => {
 }
 console.log(calcTips(testBills));
 ```
+2. One array can contain various data types
+```javascript
+const variousTypes = [
+   'Wow',
+   234,
+   [123, 590-12, 'hello', true]
+];
+
+const types = [];
+for(let i = 0; i < variousTypes.length; i++){
+   types.push(typeof variousTypes[i]);
+}
+console.log(types);
+```
+
 # Object
 ```javascript
 const dongsoo = {
-    firstName : "Dongsoo",
-    lastName : "Kim",
-    age: 2023-1991,
-    job: 'teacher',
-    friends: ['Micheal', 'Peter', 'Steven']
+   firstName : "Dongsoo",
+   lastName : "Kim",
+   birthYear: 1991,
+   job: 'teacher',
+   friends: ['Micheal', 'Peter', 'Steven'],
+   hasLicense:true,
+   calcAge: function(){
+      return 2023-this.birthYear;
+   }
 };
-
 console.log(dongsoo);
 console.log(dongsoo.lastName);
 console.log(dongsoo["firstName"]);
@@ -200,4 +219,52 @@ dongsoo.location = 'Portugal';
 dongsoo['twitter'] = '@sexysoo';
 console.log(dongsoo);
 ```
+```javascript
+console.log(dongsoo.calcAge());
+console.log(dongsoo['calcAge']());
+```
+```javascript
+const dongsoo = {
+    firstName : "Dongsoo",
+    lastName : "Kim",
+    birthYear: 1991,
+    job: 'teacher',
+    friends: ['Micheal', 'Peter', 'Steven'],
+    hasLicense:true,
+    calcAge: function(){
+        this.age = 2023-this.birthYear;
+        return this.age;
+    },
+   introduce: function(){
+      console.log(`${this.firstName} is a ${this.calcAge()}-year old ${this.job},
+        and he has ${this.hasLicense ? 'a': 'no'} driver's license`);
+   }
+};
+console.log(dongsoo.age);
+console.log(dongsoo.calcAge());
 
+console.log(dongsoo.age);
+```
+
+# Math
+```javascript
+dice = Math.ceil(Math.random()*6) + 1;
+dice = Math.trunc(Math.random()*6) + 1;
+```
+
+# Question
+```javascript
+//WHY 
+const me = {
+   firstName : 'me',
+   lastName : 'MeME',
+   weight : 82.5,
+   height : 1.81,
+   calcBMI : () => this.weight/(this.height**2)
+}
+
+console.log(me.calcBMI());  //NaN ?!!
+
+const calcBMI = () => 25/(1.2**2);
+console.log(calcBMI());
+```
