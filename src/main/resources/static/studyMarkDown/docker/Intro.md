@@ -63,11 +63,34 @@
       1. 컨테이너 삭제
          1. docker rm <아이디/이름>
          2. docker rm `docker ps -a -q`  -전체삭제
-            * 윈도우 : FOR /F %i in ('docker ps -a -q') do docker rm %i
+            * 윈도우 : 
+            * docker ps -aq | foreach{docker stop $_} - 전체 중지
+            * docker ps -aq | foreach {docker rm $_} - 전체 삭제
+            * FOR /f "tokens=*" %%i IN ('docker ps -aq') DO docker rm %%i
+              FOR /f "tokens=*" %%i IN ('docker images --format "{{.ID}}"') DO docker rmi %%i
       2. 이미지 삭제
          1. docker rmi <이미지id>
          2. docker system prune : 한번에 컨테이너, 이미지, 네트워크 모두 삭제 * 이것도 실행중인 컨테이너에는 영향 X
-         3. 
+# 실행 중인 컨테이너에 명령어 전달
+   1. docker exec <컨테이너아이디>
+      * docker run <컨테이너아이디> 생성하면서 명령어 실행
+   2. docker exec -it 컨테이너아이디 명령어
+   3. 아예 해당 컨테이너의 쉘환경으로 들어가기
+      1. docker exec -it 컨테이너아이디 sh(bash-우분투, zsh, powershell)
+      2. /# 뒤에 touch newfile, ls, 다 해보자
+      * 환경변수 설정
+        1. export hello=hi
+        2. echo $hello
+   4. 빠져나오기 : ctrl + d
+
+# 레디스 도커 환경에서 실행
+1. docker run redis - 서버실행
+2. redis-cli - (다른 터미널)클라이언트 실행
+   가 아닌, 컨테이너 안에서 실행하기 위해, docker exec -it <컨테이너아이디> redis-cli
+3. -it : 붙여줘야 명령어를 실행한 후 계속 명령어를 적을 수 있다. 
+   interactive terminal. 안하면 클라이언트 실행만 하고 바로 컨테이너 밖으로 나와버림
+
+
    
 # 명령어
 1. 이미지 실행 : docker run hello-world
