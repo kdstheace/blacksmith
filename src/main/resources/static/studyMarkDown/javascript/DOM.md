@@ -15,8 +15,20 @@
    - document.querySelector('.guess').value;
    - document.querySelector('.guess').value = 982
    - It ALWAYS IS STRING!!!
+4. 단점
+   1. 여러개일 경우 제일 첫번째 것만 선택된다. 
+   2. 모두선택하려면 querySelectorAll()을 사용한다. 배열처럼 들어온다.
 # 2. event listener (Click Botton...)
 1. document.querySelector('.check').addEventListener('click', function () {
     console.log(document.querySelector('.guess').value);
     });
-2. 
+
+# 3. modify css
+1. document.querySelector('body').style.backgroundColor = '#60b347';
+
+# 4. modal
+1. modal, overlay, close-modal-btn
+2. modal.classList.remove('hidden', 'moreClasses', 'doNotUseDot.');
+   1. load all classLists.
+   2. no dot(.)
+   3. 
