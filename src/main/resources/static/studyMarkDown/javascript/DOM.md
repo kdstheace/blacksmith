@@ -5,7 +5,8 @@
    1. Document : Entrypoint into the DOM
    2. `<html>` Element
    3. `<head>``<body>` Element
-   4. 
+
+
 # 1. QuerySelector
 1. Choosing Element
    - document.querySelector('.message')
@@ -18,6 +19,11 @@
 4. 단점
    1. 여러개일 경우 제일 첫번째 것만 선택된다. 
    2. 모두선택하려면 querySelectorAll()을 사용한다. 배열처럼 들어온다.
+5. ID만 둘중하나 선택가능
+   1. const score0 = document.querySelector('#score--0');
+   2. const score1 = document.getElementById('score--1');
+6. 
+
 # 2. event listener (Click Botton...)
 1. document.querySelector('.check').addEventListener('click', function () {
     console.log(document.querySelector('.guess').value);
@@ -31,4 +37,3 @@
 2. modal.classList.remove('hidden', 'moreClasses', 'doNotUseDot.');
    1. load all classLists.
    2. no dot(.)
-   3. 
