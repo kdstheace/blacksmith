@@ -24,4 +24,9 @@ execute js outside browser
 
 # npm(packaging)
 1. put 'npm init' on the basic directory of a project
-2. 
+2. setting your project packaging according to the follow-up questions
+
+# npm(use npm libraries)
+1. refer to #Install for install dependencies on a project
+2. const aa = require("moduleName");
+3. 
