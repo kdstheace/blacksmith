@@ -20,3 +20,8 @@ execute js outside browser
    5. To confirm that the change worked type Get-ExecutionPolicy and hit enter again
 
    6. Unrestricted should appear
+
+
+# npm(packaging)
+1. put 'npm init' on the basic directory of a project
+2. 
