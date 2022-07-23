@@ -111,6 +111,25 @@
    interactive terminal. 안하면 클라이언트 실행만 하고 바로 컨테이너 밖으로 나와버림
 
 
-   
+# 실제 NodeApp 만들기
+1. NodeJs App 만들기 = server.js로 패키징하고 , express 디펜던시 추가
+2. Dockerfile 만들기
+   1. FROM node:10
+      1. alpine으로 하면 npm이 없기 때문에, 뒤에 오는 RUN npm install을 할 수가 없게된다.
+   2. RUN npm install
+      1. NodeJS로 Npm registry에서 dependencies들을 (eg.express모듈) 가져오기 위함
+   3. CMD ["node", "server.js"]
+      1. node 웹 서버를 시작할 떄 node + 엔트리포인트 라는 명령어를 입력한다.
+   4. COPY
+      1. node 베이스 이미지의 컨테이너 안에는 Package.json이 없음
+      2. Server.js도 없음
+   5. WORKDIR /usr/src/app
+      1. 이미지 안에 어플리케이션 소스코드를 갖고 있을 디렉토리를 생성. 이 디렉토리가 워킹디렉토리가 된다.
+      2. 왜 필요한가? 
+3. docker build -t 이미지이름 ./
+4. docker run -p 49160:8080 이미지이름
+   1. -p: 로컬네트워크에 있던 것을 컨테이너 내부의 네트웤과 연결시켜줘야 한다.
+   2. 포트매핑이 필요. 브라우저의 포트와 컨테이너 내부 포트
 # 명령어
 1. 이미지 실행 : docker run hello-world
+
