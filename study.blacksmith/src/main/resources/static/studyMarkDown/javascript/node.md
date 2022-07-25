@@ -29,4 +29,3 @@ execute js outside browser
 # npm(use npm libraries)
 1. refer to #Install for install dependencies on a project
 2. const aa = require("moduleName");
-3. 
