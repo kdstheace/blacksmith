@@ -45,3 +45,12 @@
       3. arguments object - not in arrow function!
    2. Scope chain
    3. this keyword - not in arrow function!
+
+# Scope Chain
+1. Scoping: how our program's variables are organized and accessed. variable lifecycle, accessibility
+2. Lexical Scoping: Scoping is controlled by placement of functions and blocks in the code. 
+즉 어떤 함수나 블럭에 위치했느냐에 따라 스코프가 결정된다.
+3. Scope: space or env where a certain variable is declared.
+   1. Global Scope
+   2. Function Scope
+   3. Block Scope
