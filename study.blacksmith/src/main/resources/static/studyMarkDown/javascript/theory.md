@@ -49,8 +49,13 @@
 # Scope Chain
 1. Scoping: how our program's variables are organized and accessed. variable lifecycle, accessibility
 2. Lexical Scoping: Scoping is controlled by placement of functions and blocks in the code. 
+   1. 부모 스코프 안에 들어간 자식스코프에선 부모스코프의 변수에 접근할 수 있지만, sibling스코프 끼리는 변수를 공유하지 않음
 즉 어떤 함수나 블럭에 위치했느냐에 따라 스코프가 결정된다.
 3. Scope: space or env where a certain variable is declared.
-   1. Global Scope
-   2. Function Scope
-   3. Block Scope
+   1. Global Scope: accessible everywhere, outside of any function or block
+   2. Function Scope: accessible only inside function. = local scope
+   3. Block Scope: accessible only inside block, this only applies to let and const variables. 
+      * functions are also block scoped only in strict mode
+      * e.g. if, for loop.
+      * var 는 if, for 내부에 선언했어도 외부에서 접근가능함. var은 블록을 벗어난 바로 윗단계 스코프에 만들어진다.
+4. cf) Scope of a variable : Region of our code where a certain variable can be accessed
