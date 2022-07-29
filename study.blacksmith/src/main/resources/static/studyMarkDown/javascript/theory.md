@@ -59,3 +59,7 @@
       * e.g. if, for loop.
       * var 는 if, for 내부에 선언했어도 외부에서 접근가능함. var은 블록을 벗어난 바로 윗단계 스코프에 만들어진다.
 4. cf) Scope of a variable : Region of our code where a certain variable can be accessed
+
+# Strict mode
+1. simple function에서 this 를 사용하면 window객체를 불러와 버리는데, 이를 방지하기 위함.
+2. function 이 블럭 밖으로 나
